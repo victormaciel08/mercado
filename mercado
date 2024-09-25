@@ -76,17 +76,7 @@ void comprarProduto(struct Produto produto[], struct Carrinho carrinho[], int qn
 	scanf(" %d", &qntProd);
 	system("cls");
 	
-	if(qnt != 0){
-		for(i = 0; i < qnt; i++){					
-			printf("Código: %d\n", produto[i].cod);
-			printf("Nome: %s\n", produto[i].nome);
-			printf("Preço: %.2f\n", produto[i].preco);
-			printf("Quantidade em Estoque: %d\n", produto[i].qntEstq);
-			printf("--------------------\n\n");
-		}
-	}else{
-		printf("Nenhum produto foi cadastrado!");
-	}
+
 	
 	for(i = 0; i < qntProd; i++){
 		printf("Digite a o codigo do produto: ");
@@ -100,7 +90,7 @@ void comprarProduto(struct Produto produto[], struct Carrinho carrinho[], int qn
                 printf("Quantidade em estoque: %d\n", produto[j].qntEstq);
                 printf("Digite a quantidade desejada: ");
                 scanf("%d", &qntDesejada);
-                system("cls");
+                system("cls"); 
                 
                 if(qntDesejada <= produto[j].qntEstq){
                 	
@@ -111,7 +101,8 @@ void comprarProduto(struct Produto produto[], struct Carrinho carrinho[], int qn
                     
                     (*qntProdCarrinho)++;
                 	
-                	printf("Produto adicionado ao carrinho!\n");   	
+                	printf("Produto adicionado ao carrinho!\n");   
+					printf(" %d", *qntProdCarrinho);	
                 	system("pause");
                 	system("cls");   	
                 	
@@ -121,12 +112,12 @@ void comprarProduto(struct Produto produto[], struct Carrinho carrinho[], int qn
                 	system("cls");
 				}
 			}
-		}if(!prodEncontrado){
+				}if(prodEncontrado == 0){
 				printf("Produto não encontrado!\n");
 				system("pause");
                 system("cls");
-				}
-		
+		}
+		prodEncontrado == 0;
 	}	
 }
 
@@ -134,7 +125,7 @@ void vizualizarCarrinho(struct Produto produto[], struct Carrinho carrinho[], in
 	int i = 0;
 	float soma = 0;
 	
-	if(qntProdCarrinho < 0){
+	if(qntProdCarrinho > 0){
 		for(i = 0; i < qntProdCarrinho; i++){
 			soma = (carrinho[i].produto.preco * carrinho[i].qntCarrinho);
 			printf ("Produto: %s\n", carrinho[i].produto.nome);
@@ -145,17 +136,16 @@ void vizualizarCarrinho(struct Produto produto[], struct Carrinho carrinho[], in
 		}
 		}else{
 			printf("Ainda não há produtos no Carrinho!");
-		}
-		system("pause");
+		}system("pause");
         system("cls");				
-	}
+	}		
 
 void fecharPedido(struct Produto produto[], struct Carrinho carrinho[], int qntProdCarrinho){
 	int i = 0;
 	float soma = 0;
 	float valorTotal = 0;
 	
-		for(i = 0; i < qntProdCarrinho; i++){
+		for(i = 0; i <= qntProdCarrinho; i++){
 			soma = (carrinho[i].produto.preco * carrinho[i].qntCarrinho);
 			printf ("Produto: %s\n", carrinho[i].produto.nome);
 			printf ("Unidades: %d\n", carrinho[i].qntCarrinho);
