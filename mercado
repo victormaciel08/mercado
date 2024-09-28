@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
-
+#define X 50
 struct Produto{
 	int cod;
 	char nome[30];
 	float preco;
-	int qntEstq = 0;
+	int qntEstq;
 };
 
 struct Carrinho{
@@ -15,7 +15,7 @@ struct Carrinho{
 	int qntCarrinho;
 };
 
-void cadastrarProduto(struct Produto produto[], int *qnt){
+void cadastrarProduto(struct Produto produto[50], int *qnt){
 	int i;
 	int cad = 0;
 	
@@ -56,10 +56,10 @@ void listarProdutos(struct Produto produto[], int qnt){
 			printf("Nome: %s\n", produto[i].nome);
 			printf("Preço: %.2f\n", produto[i].preco);
 			printf("Quantidade em Estoque: %d\n", produto[i].qntEstq);
-			printf("--------------------\n\n");
+			printf("--------------------\n");
 		}
 	}else{
-		printf("Nenhum produto foi cadastrado!");
+		printf("Nenhum produto foi cadastrado!\n");
 	}
 	system("pause");
 	system("cls");
@@ -76,10 +76,10 @@ void comprarProduto(struct Produto produto[], struct Carrinho carrinho[], int qn
 	scanf(" %d", &qntProd);
 	system("cls");
 	
-
+	listarProdutos(produto, qnt);
 	
 	for(i = 0; i < qntProd; i++){
-		printf("Digite a o codigo do produto: ");
+		printf("Digite o codigo do produto: ");
 		scanf(" %d", &codProd);
 		
 		
@@ -112,8 +112,8 @@ void comprarProduto(struct Produto produto[], struct Carrinho carrinho[], int qn
                 	system("cls");
 				}
 			}
-				}if(prodEncontrado == 0){
-				printf("Produto não encontrado!\n");
+		}if(prodEncontrado == 0){
+			printf("Produto não encontrado!\n");
 				system("pause");
                 system("cls");
 		}
@@ -135,35 +135,43 @@ void vizualizarCarrinho(struct Produto produto[], struct Carrinho carrinho[], in
 			printf("--------------------\n\n");
 		}
 		}else{
-			printf("Ainda não há produtos no Carrinho!");
+			printf("Ainda não há produtos no Carrinho!\n");
 		}system("pause");
         system("cls");				
-	}		
-
+	}
+			
 void fecharPedido(struct Produto produto[], struct Carrinho carrinho[], int qntProdCarrinho){
 	int i = 0;
 	float soma = 0;
-	float valorTotal = 0;
+	float valorTotal = 0;	
+	char fechar;
 	
-		for(i = 0; i <= qntProdCarrinho; i++){
+		for(i = 0; i < qntProdCarrinho; i++){
 			soma = (carrinho[i].produto.preco * carrinho[i].qntCarrinho);
 			printf ("Produto: %s\n", carrinho[i].produto.nome);
 			printf ("Unidades: %d\n", carrinho[i].qntCarrinho);
 			printf ("Valor Unitário: %.2f\n", carrinho[i].produto.preco);
 			printf("Valor Total do Produto: %.2f\n", soma);
-			printf("--------------------\n\n");
+			printf("--------------------\n");
 			valorTotal += soma;
 		}
 		printf("Valor total do PEDIDO: %.2f\n", valorTotal);
+		printf("--------------------\n\n");
+		
+		printf("Deseja confirmar o pedido?(S ou N) ");		
+		scanf(" %c", &fechar);
 		system("pause");
         system("cls");
-        for(i = 0; i < qntProdCarrinho; i++){
-        //	carrinho[i]->qntCarrinho = 0;
-        //	strcpy(carrinho[i].produto->nome, "");
-        //	carrinho[i].produto->preco = 0;
-		//}
+        
+        if(fechar == 'S' || fechar == 's'){
+    		for(i = 0; i < qntProdCarrinho; i++){
+        	carrinho[i].qntCarrinho = 0;
+        	carrinho[i].produto.preco = 0;
+			} 
+		}
+		
 	}
-}
+
 
 void menuPrincipal(struct Produto produto[], struct Carrinho carrinho[], int *qnt, int qntProd, int *qntProdCarrinho){
 	
